@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduPathway AI - Professional Admissions Consultancy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #0b0f19; color: #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(15, 23, 42, 0.9); border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 10; }
+        .logo { font-size: 20px; font-weight: 800; color: #38bdf8; text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; list-style: none; align-items: center; }
+        .btn-client { background: #2563eb; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        .btn-staff { background: #1e293b; border: 1px solid #334155; color: #38bdf8; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; }
+        
+        .hero { text-align: center; padding: 100px 20px 60px; max-width: 900px; margin: 0 auto; }
+        .hero h1 { font-size: 48px; font-weight: 800; color: #f8fafc; margin-bottom: 20px; line-height: 1.2; }
+        .hero h1 span { color: #38bdf8; }
+        .hero p { font-size: 16px; color: #94a3b8; margin-bottom: 40px; }
+        
+        .stats-box { display: flex; justify-content: center; gap: 40px; background: #1e293b; border: 1px solid #334155; padding: 25px; border-radius: 16px; margin-top: 40px; }
+        .stat h3 { font-size: 24px; color: #34d399; font-weight: 800; }
+        .stat p { font-size: 12px; color: #94a3b8; text-transform: uppercase; }
+
+        .services { max-width: 1000px; margin: 60px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 25px; }
+        .card h3 { font-size: 18px; color: #f8fafc; margin-bottom: 10px; }
+        .card p { font-size: 14px; color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">🎓 EduPathway AI Consultancy</a>
+        <ul class="nav-links">
+            <li><a href="/client/login" class="btn-client">Client Portal Login</a></li>
+            <li><a href="/staff/login" class="btn-staff">Staff Portal Login</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h1>Professional Higher Education & <span>Admissions Advisory</span></h1>
+        <p>Empowering students with data-driven college selection, cutoff evaluation, and strategic career roadmaps.</p>
+        
+        <div style="display: flex; gap: 15px; justify-content: center;">
+            <a href="/client/login" class="btn-client" style="padding: 14px 28px; font-size: 16px;">Book Consultation (₹2,000)</a>
+        </div>
+
+        <div class="stats-box">
+            <div class="stat">
+                <h3>₹{{ revenue }}</h3>
+                <p>Consultancy Revenue Generated</p>
+            </div>
+            <div class="stat">
+                <h3>{{ clients }}</h3>
+                <p>Client Assessments Completed</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="services">
+        <div class="card">
+            <h3>📊 Cutoff & Eligibility Audit</h3>
+            <p>Precise evaluation of academic cutoffs to match students with premier institutional bands.</p>
+        </div>
+        <div class="card">
+            <h3>🎯 Career Path Mapping</h3>
+            <p>Tailored advisory roadmaps for high-growth tech domains like AI, Data Science, and Engineering.</p>
+        </div>
+        <div class="card">
+            <h3>💼 Verified Fee & Reports</h3>
+            <p>Transparent digital service invoicing and certified advisory documentation.</p>
+        </div>
+    </div>
+</body>
+</html>

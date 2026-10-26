@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Portal Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #0b0f19; color: #e2e8f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 40px; width: 100%; max-width: 400px; }
+        h2 { color: #f8fafc; margin-bottom: 5px; }
+        p { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+        label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; display: block; margin-top: 15px; margin-bottom: 5px; }
+        input { width: 100%; padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; }
+        .btn { width: 100%; background: #059669; color: #fff; border: none; padding: 14px; border-radius: 8px; font-weight: 700; margin-top: 25px; cursor: pointer; }
+        .error { background: rgba(239, 68, 68, 0.1); color: #f87171; padding: 10px; border-radius: 8px; font-size: 12px; margin-bottom: 15px; }
+        .back { display: block; text-align: center; margin-top: 15px; color: #94a3b8; font-size: 13px; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🏢 Staff Portal Login</h2>
+        <p>Company management access.</p>
+        {% if error %}<div class="error">{{ error }}</div>{% endif %}
+        <form action="/staff/login" method="POST">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="admin" required>
+            
+            <label>Password</label>
+            <input type="password" name="password" placeholder="admin123" required>
+            
+            <button type="submit" class="btn">Login to Staff Portal</button>
+        </form>
+        <a href="/" class="back">← Back to Main Website</a>
+    </div>
+</body>
+</html>

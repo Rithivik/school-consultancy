@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Dashboard - EduPathway AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #0b0f19; color: #e2e8f0; padding: 30px; }
+        header { display: flex; justify-content: space-between; align-items: center; max-width: 900px; margin: 0 auto 30px; border-bottom: 1px solid #1e293b; padding-bottom: 15px; }
+        .container { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 25px; }
+        .full { grid-column: 1 / -1; }
+        label { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; display: block; margin-top: 12px; margin-bottom: 5px; }
+        input { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 14px; }
+        .btn { background: #2563eb; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 700; width: 100%; margin-top: 20px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; font-size: 11px; color: #64748b; padding: 8px; border-bottom: 1px solid #334155; }
+        td { padding: 10px 8px; font-size: 13px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+        .logout { color: #f87171; text-decoration: none; font-weight: 600; font-size: 13px; }
+        .email-box { background: #0f172a; border: 1px solid #38bdf8; border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; font-size: 13px; color: #38bdf8; display: flex; align-items: center; gap: 10px; }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h3>👋 Welcome, {{ name }}</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-top: 2px;">Logged in as: {{ email }}</p>
+        </div>
+        <a href="/logout" class="logout">Logout</a>
+    </header>
+
+    <div class="container">
+        <!-- New Consultation Request Form -->
+        <div class="card">
+            <h3>📝 Request Consultation</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-top: 4px;">Service Retainer: ₹2,000</p>
+            <form action="/client/dashboard" method="POST">
+                <label>Field of Interest</label>
+                <input type="text" name="interest" placeholder="e.g. Artificial Intelligence" required>
+                
+                <label>Academic Cutoff / Score</label>
+                <input type="number" step="0.1" name="cutoff" placeholder="e.g. 185.5" required>
+                
+                <button type="submit" class="btn">Pay ₹2,000 & Submit</button>
+            </form>
+        </div>
+
+        <!-- Application History -->
+        <div class="card">
+            <h3>📋 My Application History</h3>
+            <table>
+                <tr><th>ID</th><th>Interest</th><th>Status</th></tr>
+                {% for r in records %}
+                <tr>
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.interest }}</td>
+                    <td>
+                        {% if r.status == 'Completed' %}<span style="color: #34d399;">✓ Completed</span>
+                        {% else %}<span style="color: #fbbf24;">⏳ In Review</span>{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Email Notification Inbox Section -->
+        <div class="card full" style="background: #131c31; border-color: #38bdf8;">
+            <h3>📬 Email Notification Inbox for {{ email }}</h3>
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 15px;">Simulated real-time emails sent to your registered email address upon submission and staff updates.</p>
+            
+            {% set ns = namespace(has_notes=false) %}
+            {% for r in records %}
+                {% if r.notifications %}
+                    {% set ns.has_notes = true %}
+                    {% for note in r.notifications %}
+                    <div class="email-box">
+                        <span>{{ note }}</span>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+            
+            {% if not ns.has_notes %}
+                <p style="font-size: 13px; color: #64748b; font-style: italic;">No notifications in your inbox yet. Submit a consultation above to receive your review confirmation email.</p>
+            {% endif %}
+        </div>
+
+        <!-- Generated Roadmaps -->
+        {% for r in records %}
+            {% if r.roadmap %}
+            <div class="card full" style="background: #1e1b4b; border-color: #6366f1;">
+                <h3>📋 Generated Advisory Roadmap for {{ r.interest }} ({{ r.id }})</h3>
+                <ul style="margin-top: 10px; padding-left: 20px; font-size: 14px;">
+                    {% for p in r.roadmap %}<li style="margin-bottom: 6px;">{{ p }}</li>{% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

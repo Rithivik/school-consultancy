@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Company Staff Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #0f172a; color: #f8fafc; padding: 30px; }
+        header { display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto 30px; border-bottom: 1px solid #334155; padding-bottom: 15px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 25px; }
+        .box { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 18px; }
+        .box h4 { font-size: 11px; color: #94a3b8; text-transform: uppercase; }
+        .box .val { font-size: 24px; font-weight: 800; margin-top: 5px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; padding: 25px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; font-size: 11px; color: #64748b; padding: 10px; border-bottom: 1px solid #334155; text-transform: uppercase; }
+        td { padding: 12px 10px; font-size: 13px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+        select { background: #0f172a; color: #fff; border: 1px solid #334155; padding: 5px; border-radius: 6px; }
+        .btn-up { background: #2563eb; color: #fff; border: none; padding: 5px 10px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 12px; }
+        .logout { color: #f87171; text-decoration: none; font-weight: 600; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h3>🏢 Consultancy Company Staff Portal</h3>
+        <a href="/logout" class="logout">Logout</a>
+    </header>
+
+    <div class="container">
+        <div class="metrics">
+            <div class="box">
+                <h4>Total Revenue</h4>
+                <div class="val" style="color: #34d399;">₹{{ revenue }}</div>
+            </div>
+            <div class="box">
+                <h4>Total Clients</h4>
+                <div class="val">{{ total }}</div>
+            </div>
+            <div class="box">
+                <h4>Completed</h4>
+                <div class="val">{{ completed }}</div>
+            </div>
+            <div class="box">
+                <h4>Pending Reviews</h4>
+                <div class="val" style="color: #fbbf24;">{{ pending }}</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📋 Client Leads & Revenue Ledger</h3>
+            <table>
+                <tr><th>ID</th><th>Student</th><th>Email</th><th>Interest</th><th>Fee Paid</th><th>Status</th><th>Action</th></tr>
+                {% for c in clients %}
+                <tr>
+                    <td>{{ c.id }}</td>
+                    <td>{{ c.student }}</td>
+                    <td>{{ c.email }}</td>
+                    <td>{{ c.interest }}</td>
+                    <td style="color: #34d399; font-weight: 700;">₹{{ c.fee_paid }}</td>
+                    <td>
+                        {% if c.status == 'Completed' %}<span style="color: #34d399;">✓ Completed</span>
+                        {% else %}<span style="color: #fbbf24;">⏳ In Review</span>{% endif %}
+                    </td>
+                    <td>
+                        <form action="/staff/update/{{ c.id }}" method="POST" style="display: flex; gap: 6px;">
+                            <select name="status">
+                                <option value="In Review" {% if c.status == 'In Review' %}selected{% endif %}>In Review</option>
+                                <option value="Completed" {% if c.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            </select>
+                            <button type="submit" class="btn-up">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+</html>
