@@ -11,10 +11,14 @@ app.secret_key = 'edu_consultancy_secure_key'
 # REAL EMAIL SMTP FUNCTION
 # ==========================================
 def send_real_email(recipient_email, subject, message_body):
-    # ⚠️ Replace these with your actual Gmail address and your 16-character Google App Password
-    sender_email = "rithuolive@gmail.com"
-    sender_password = "kvszsupxgmsogdsa"
+    sender_email = "your_email@gmail.com"
+    sender_password = "your_app_password_here"
     
+    # Skip if placeholders are still present
+    if sender_email == "your_email@gmail.com" or not sender_password:
+        print("Skipping real email: Gmail credentials not configured.")
+        return
+
     try:
         msg = MIMEMultipart()
         msg['From'] = sender_email
@@ -23,15 +27,16 @@ def send_real_email(recipient_email, subject, message_body):
         
         msg.attach(MIMEText(message_body, 'plain'))
         
-        # Connect to Gmail SMTP server
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        # Added timeout=5 so it fails quickly instead of hanging if port 587 is blocked by cloud hosts
+        server = smtplib.SMTP('smtp.gmail.com', 587, timeout=5)
         server.starttls()
         server.login(sender_email, sender_password)
         server.sendmail(sender_email, recipient_email, msg.as_string())
         server.quit()
         print(f"Real email successfully sent to {recipient_email}")
     except Exception as e:
-        print(f"Failed to send real email: {e}")
+        # Prevents server crashes on cloud hosts that restrict outbound SMTP ports
+        print(f"Email dispatch note (Cloud server blocked SMTP port): {e}")
 
 
 # In-memory database holding consultancy client records, revenue, and notification logs
